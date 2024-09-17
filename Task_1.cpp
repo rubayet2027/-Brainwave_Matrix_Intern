@@ -9,6 +9,11 @@ private:
     double balance;
 
 public:
+    Account(){
+        accountHolder = "";
+        this->pin = "";
+        balance = 0.00;
+    }
     Account(string holder, string pin, double initialBalance) {
         accountHolder = holder;
         this->pin = pin;
