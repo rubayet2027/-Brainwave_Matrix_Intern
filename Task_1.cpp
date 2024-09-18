@@ -7,6 +7,8 @@ private:
     string accountHolder;
     string pin;
     double balance;
+    vector<string> transactionHistory;
+    
 
 public:
     Account(){
@@ -18,6 +20,7 @@ public:
         accountHolder = holder;
         this->pin = pin;
         balance = initialBalance;
+        transactionHistory.push_back("Account created with initial balance: " + to_string(initialBalance));
     }
 
     bool validatePIN(string inputPIN) {
@@ -31,6 +34,7 @@ public:
     void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
+            transactionHistory.push_back("Deposited: " + to_string(amount));
             cout << "Deposit successful! New balance: " << balance << endl;
         } else {
             cout << "Invalid deposit amount." << endl;
@@ -40,6 +44,7 @@ public:
     void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
+            transactionHistory.push_back("Withdrew: " + to_string(amount));
             cout << "Withdrawal successful! New balance: " << balance << endl;
         } else {
             if (amount < 0){
@@ -53,6 +58,17 @@ public:
     void changePIN(string newPIN) {
         pin = newPIN;
         cout << "PIN successfully changed!" << endl;
+    }
+    void showTransactionHistory() {
+        cout << "\n--- Transaction History ---" << endl;
+        if (transactionHistory.empty()) {
+            cout << "No transactions found." << endl;
+        } else {
+            for (const string& record : transactionHistory) {
+                cout << record << endl;
+            }
+        }
+        cout << "---------------------------" << endl;
     }
 };
 
@@ -76,7 +92,8 @@ public:
                     cout << "2. Deposit" << endl;
                     cout << "3. Withdraw" << endl;
                     cout << "4. Change PIN" << endl;
-                    cout << "5. Exit" << endl;
+                    cout << "5. Transaction History" << endl;
+                    cout << "6. Exit"<<endl;
                     cout<<endl;
                     cout << "Enter your choice: ";
                     cin >> choice;
@@ -131,6 +148,10 @@ public:
                             break;
                         }
                         case 5: {
+                            account.showTransactionHistory();
+                            break;
+                        }
+                        case 6: {
                             cout << "Thank you for using the ATM. Goodbye!" << endl;
                             break;
                         }
@@ -139,7 +160,7 @@ public:
                             break;
                         }
                     }
-                } while (choice != 5);
+                } while (choice != 6);
             } else {
                 cout << "Invalid PIN!" << endl;
             }
